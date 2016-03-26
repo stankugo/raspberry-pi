@@ -5,9 +5,9 @@
 If you boot up the raspberry-pi for the first time, you might want to setup and update some things. Always use `sudo` with those commands.
 
 ```bash
-sudo raspi-config
 sudo apt-get update
 sudo apt-get upgrade
+sudo apt-get dist-upgrade
 sudo rpi-update
 sudo reboot
 ```
@@ -44,3 +44,19 @@ To use an external USB SoundCard you need to setup the right options within seve
 * `sudo raspi-config` Force Audio
 * `sudo nano /etc/modprobe.d/alsa-base.conf` options snd-usb-audio index=-2
 * `sudo nano /etc/modules` snd-bcm2835
+
+## RPi3
+### Disable Bluetooth
+To disable onboard Pi3 Bluetooth and restore UART0/ttyAMA0 over GPIOs 14 & 15 modify:
+
+```bash
+sudo nano /boot/config.txt
+
+dtoverlay=pi3-disable-bt
+```
+
+We also need to run to stop BT modem trying to use UART
+
+```bash
+sudo systemctl disable hciuart
+```
